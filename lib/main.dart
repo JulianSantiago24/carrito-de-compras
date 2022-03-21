@@ -10,7 +10,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'App e-commerce',
-        home: ProductsPage()
+        home: ProductsPage(),
+        initialRoute: 'Products',
+        routes: {
+          'Products': (context) => ProductsPage(),
+        },
       );
   }
 }

@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter_app_carrito_de_compras/Products/model/products_model.dart';
+import 'package:flutter_app_carrito_de_compras/Products/ui/screens/products_detail_page.dart';
 import 'package:flutter_app_carrito_de_compras/utils/constanst.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -94,6 +95,7 @@ class _ProductsPageState extends State<ProductsPage> {
                     left: 80.0,
                     bottom: 30.0,
                     child: FloatingActionButton(
+                      heroTag: listProducts[index].id,
                       mini: true,  
                       backgroundColor: kDangerColor.withOpacity(0.8),                  
                       onPressed: (){},
@@ -128,8 +130,22 @@ class _ProductsPageState extends State<ProductsPage> {
                   Positioned(    
                     right: 0.0,
                     bottom: 0.0,
-                    child:  TextButton(
-                      onPressed: (){}, 
+                    child:  TextButton(                      
+                      onPressed: (){
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ProductsDetailPage(
+                              id: listProducts[index].id,
+                              title: listProducts[index].title,
+                              description: listProducts[index].description,
+                              rating: listProducts[index].rating,
+                              price: listProducts[index].price,
+                              image: listProducts[index].image
+                            )
+                          ), 
+                        );
+                      }, 
                       child: Text('Ver detalles',
                       style: TextStyle(
                         color: kBackgroundColor,
