@@ -1,11 +1,14 @@
 
 import 'dart:convert';
 import 'dart:ui';
+import 'package:flutter_app_carrito_de_compras/Cart/provider/shopping_cart_provider.dart';
 import 'package:flutter_app_carrito_de_compras/Products/model/products_model.dart';
 import 'package:flutter_app_carrito_de_compras/Products/ui/screens/products_detail_page.dart';
 import 'package:flutter_app_carrito_de_compras/utils/constanst.dart';
+import 'package:flutter_app_carrito_de_compras/widgets/bottom_nav_bar_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class ProductsPage extends StatefulWidget {
 
@@ -45,6 +48,9 @@ class _ProductsPageState extends State<ProductsPage> {
 
   @override
   Widget build(BuildContext context, ) {
+
+    final shoppingCartProvider = Provider.of<ShoppingCartProvider>(context);
+
     return Scaffold(
       backgroundColor: kBackgroundColor,
       appBar: AppBar(
@@ -98,7 +104,9 @@ class _ProductsPageState extends State<ProductsPage> {
                       heroTag: listProducts[index].id,
                       mini: true,  
                       backgroundColor: kDangerColor.withOpacity(0.8),                  
-                      onPressed: (){},
+                      onPressed: (){                        
+                        shoppingCartProvider.listProductsPurchased.add(listProducts[index]);                 
+                      },
                       child: Icon(Icons.add_shopping_cart)
                     ),                
                   ),
@@ -160,19 +168,20 @@ class _ProductsPageState extends State<ProductsPage> {
           );        
         }
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: kPrimaryColor,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Productos',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Carrito',
-          ),      
-        ],
-      ),
+      bottomNavigationBar: BottomNavBarWidget()
+      // bottomNavigationBar: BottomNavigationBar(
+      //   backgroundColor: kPrimaryColor,
+      //   items: [
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home),
+      //       label: 'Productos',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.shopping_cart),
+      //       label: 'Carrito',
+      //     ),      
+      //   ],
+      // ),
     );
   }
 }

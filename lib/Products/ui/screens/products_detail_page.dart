@@ -1,7 +1,9 @@
 
-import 'package:flutter/material.dart';
+import 'package:flutter_app_carrito_de_compras/Cart/provider/shopping_cart_provider.dart';
 import 'package:flutter_app_carrito_de_compras/Products/model/products_model.dart';
 import 'package:flutter_app_carrito_de_compras/utils/constanst.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductsDetailPage extends StatefulWidget {
 
@@ -21,7 +23,6 @@ class ProductsDetailPage extends StatefulWidget {
     this.image
   });
 
-
   @override
   State<ProductsDetailPage> createState() => _ProductsDetailPageState();
 }
@@ -29,6 +30,8 @@ class ProductsDetailPage extends StatefulWidget {
 class _ProductsDetailPageState extends State<ProductsDetailPage> {
   @override
   Widget build(BuildContext context) {
+    
+    final shoppingCartProvider = Provider.of<ShoppingCartProvider>(context);
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -90,8 +93,7 @@ class _ProductsDetailPageState extends State<ProductsDetailPage> {
                                       TextSpan(text: "Precio\n",
                                         style: TextStyle(
                                         color: kPrimaryColor,                            
-                                        fontSize: 18,
-                                                                    //fontWeight: FontWeight.bold
+                                        fontSize: 18,                                                                    //fontWeight: FontWeight.bold
                                         )
                                       ),
                                       TextSpan(text: '\$' + widget.price.toString(),
@@ -111,8 +113,7 @@ class _ProductsDetailPageState extends State<ProductsDetailPage> {
                                       TextSpan(text: "Calificación\n",
                                         style: TextStyle(
                                         color: kPrimaryColor,                            
-                                        fontSize: 18,
-                                                                    //fontWeight: FontWeight.bold
+                                        fontSize: 18,                                                                    //fontWeight: FontWeight.bold
                                         )
                                       ),
                                       WidgetSpan(
@@ -124,38 +125,47 @@ class _ProductsDetailPageState extends State<ProductsDetailPage> {
                                             Text(widget.rating.count.toString()),                                          
                                           ],
                                         ),                                      
-                                      ),
-                                                                                                                           
+                                      ),                                                                                                                           
                                     ],                          
                                   )
                                 ),
                               ],
                             ),
-                            
-                                  
-
                             SizedBox(width: 30,),
                             Expanded(
                               child: Stack(
                                 children:[
                                   Container(
-                                  padding: EdgeInsets.all(20.0),
-                                  height: 310,                                
-                                  child: Image(
-                                    fit: BoxFit.fill,
-                                    image: NetworkImage(widget.image),
+                                    padding: EdgeInsets.all(20.0),
+                                    height: 310,                                
+                                    child: Image(
+                                      fit: BoxFit.fill,
+                                      image: NetworkImage(widget.image),
+                                    ),
                                   ),
-                                ),Positioned(
-                                  bottom: 40.0,
-                                  right: 30.0,
-                                  child: FloatingActionButton(
-                                        heroTag: widget.id,
-                                        mini: true,  
-                                        backgroundColor: kDangerColor.withOpacity(0.8),                  
-                                        onPressed: (){},
-                                        child: Icon(Icons.add_shopping_cart)
-                                      ),
-                                ),]
+                                  Positioned(
+                                    bottom: 40.0,
+                                    right: 30.0,
+                                    child: FloatingActionButton(
+                                      heroTag: widget.id,
+                                      mini: true,  
+                                      backgroundColor: kDangerColor.withOpacity(0.8),
+                                      child: Icon(Icons.add_shopping_cart),                 
+                                      onPressed: (){                        
+                                        shoppingCartProvider.listProductsPurchased.add(
+                                          ProductsModel(
+                                            id: widget.id,
+                                            description: widget.description,
+                                            price: widget.price,
+                                            rating: widget.rating,
+                                            image: widget.image,
+                                            title: widget.title
+                                          )
+                                        );
+                                      },                                          
+                                    ),
+                                  ),
+                                ]
                               ),                              
                             ),                           
                           ],                                                    
@@ -163,26 +173,27 @@ class _ProductsDetailPageState extends State<ProductsDetailPage> {
                         widget.description.length >= 400
                         ? SizedBox(height: 30)
                         : SizedBox(height: 80),
-                            RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(text: "Descripción\n",
-                                    style: TextStyle(                                    
-                                    color: Colors.white,                            
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w900                                                               //fontWeight: FontWeight.bold
-                                    )
-                                  ),
-                                  TextSpan(text: widget.description,
-                                    style: TextStyle(
-                                    color: kTextTitleColor,                            
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w700                          //fontWeight: FontWeight.bold
-                                    )
-                                  )                      
-                                ],                          
-                              )
-                            ),
+                        RichText(
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "Descripción\n",
+                                style: TextStyle(                                    
+                                  color: Colors.white,                            
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w900                                                               //fontWeight: FontWeight.bold
+                                )
+                              ),
+                              TextSpan(text: widget.description,
+                                style: TextStyle(
+                                  color: kTextTitleColor,                            
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w700                          //fontWeight: FontWeight.bold
+                                )
+                              )                      
+                            ],                          
+                          )
+                        ),
                       ],
                     ),
                   ),                                
@@ -191,19 +202,6 @@ class _ProductsDetailPageState extends State<ProductsDetailPage> {
             )
           ],
         ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: kPrimaryColor,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Productos',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart),
-            label: 'Carrito',
-          ),      
-        ],
       ),
     );
   }
