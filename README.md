@@ -1,16 +1,22 @@
 # flutter_app_carrito_de_compras
 
-A new Flutter project.
+## Este es un proyecto de carrito de compras con las siguientes caracteristicas:
 
-## Getting Started
+###### Pantalla de inicio; allí se muestra listado de productos.
+###### Pantalla de detalles; allí se muestra información ampliada de cada producto.
+###### Pantalla de carrito de compras; allí se muestra listado de productos seleccionados.
 
-This project is a starting point for a Flutter application.
+## Caractericticas:
+###### Los productos pueden agregarse desde la pantalla de inicio y pantalla de detalles.
+###### Dentro de la pantalla de carrito de compras se pueden eliminar de forma individual y completa los productos previamente seleccionados.
+###### Para el listado de productos se esta consumiendo el API Fake Store(fakestoreapi.com/docs).
+###### Se realizo implementación de clean architecture para exponer entidades con sus respectivos modelos, providers y elementos visuales.
+###### Se realizo implementación de providers para el manejo de estado de algunos elementos.
+###### Las interfaces de usuario fueron desarolladas progresivamente 1. Pantalla lista de productos 2. Pantalla detalle de productos 3. Pantalla carrito de compras.
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+
+
+
+
